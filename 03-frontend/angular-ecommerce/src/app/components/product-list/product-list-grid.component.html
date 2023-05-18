@@ -17,7 +17,7 @@
                         </a>
 
                         <div class="price">{{ tempProduct.unitPrice | currency:'SEK'}}</div>
-                        <a href="#" class="primary-btn">Add to cart</a>
+                        <button (click)="addToCart(tempProduct)" class="btn btn-primare btn-sm">Add to cart</button>
                     </div>
 
                </div>
@@ -36,7 +36,7 @@
 
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-9" style="padding-left: 10%">
+                            <div class="col-md-9">
 
                                 <ngb-pagination [(page)]="thePageNumber"
                                                 [pageSize]="thePageSize"
@@ -50,10 +50,9 @@
                             </div>
 
                                 <div class="col-md-3 mt-2" style="text-align: right;">
-                                    <span class="mr-2">Page Size</span>
+                                    <span class="mr-2"> Page Size </span>
 
                                     <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
-                                        <option>2</option>
                                         <option selected="true">5</option>
                                         <option>10</option>
                                         <option>20</option>
