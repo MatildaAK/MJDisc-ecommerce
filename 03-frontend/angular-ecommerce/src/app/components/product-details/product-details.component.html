@@ -4,8 +4,8 @@
         <img src="{{ product.imageUrl }}" class="detail-img">
 
         <h3>{{ product.name }}</h3>
-        <div class="price">{{ product.unitPrice | currency:'SEK' }}</div>
-        <button (click)="addToCart()" class="btn btn-primary btm-sm">Add to cart</button>
+        <div class="price">{{ product.unitPrice | currency:'SEK ' }}</div>
+        <button (click)="addToCart()" class="btn btn-primary btn-sm">Add to cart</button>
 
         <hr>
         <h4>Description</h4>
