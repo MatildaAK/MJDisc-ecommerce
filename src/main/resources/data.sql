@@ -592,3 +592,11 @@ INSERT INTO `state` VALUES
 (221,'Yalova',5),
 (222,'Yozgat',5),
 (223,'Zonguldak',5);
+
+-- -------------------------------------------------------------------------------
+
+-- Customer
+
+-- ------------------------------------------------------------------------
+
+INSERT INTO customer(first_name, last_name, email) VALUES ('Demo', 'Darby', 'demo@luv2code.com');
