@@ -17,7 +17,7 @@ Kundkorg:
 <img width="807" alt="kundkorg" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/849a2ac2-ca17-4ae5-a183-a1f2a022946b">
 
 
-Checkout formuläret:
+Checkout formulär:
 
 <img width="729" alt="checkout" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/48800c04-67c2-45f5-afad-d5fc9b497d91">
 
