@@ -19,13 +19,13 @@ Kundkorg:
 
 Checkout formuläret:
 
-<img width="652" alt="checkout" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/26c1d83e-2474-4eb5-9bde-2cf56a196e03">
+<img width="729" alt="checkout" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/48800c04-67c2-45f5-afad-d5fc9b497d91">
 
-
-<img width="655" alt="checkout-2" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/e9402625-bbcd-4c54-b554-b68d574e77ba">
-
+<img width="728" alt="checkout-2" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/0f4fa0d4-dcae-47a7-b3d8-4cf6bcc89a86">
 
 <img width="650" alt="checkout-kort" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/193523ad-e88f-467e-896b-29f0d4cab1f8">
+
+<img width="726" alt="checkout-felmeddelande" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/ceb5b482-9052-4115-8364-592d18fd8393">
 
 
 Tidigare lagda beställningar:
