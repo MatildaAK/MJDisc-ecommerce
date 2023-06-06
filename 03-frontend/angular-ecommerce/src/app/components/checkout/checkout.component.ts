@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupName, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Address } from 'src/app/common/address';
 import { Country } from 'src/app/common/country';
 import { Order } from 'src/app/common/order';
 import { OrderItem } from 'src/app/common/order-item';
@@ -30,6 +31,9 @@ export class CheckoutComponent implements OnInit {
 
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
+
+  shippingAddressAddress: Address[] = [];
+  billingAddressAddress: Address[] = [];
 
   storage: Storage = sessionStorage;
   
@@ -66,7 +70,7 @@ export class CheckoutComponent implements OnInit {
                                     MJDiscValidators.notOnlyWhitespace]),
         city: new FormControl('', [Validators.required, Validators.minLength(2),
                                   MJDiscValidators.notOnlyWhitespace]),
-        state: new FormControl('', [Validators.required]),
+       //  state: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
         zipCode: new FormControl('', [Validators.required, Validators.minLength(2),
                                       MJDiscValidators.notOnlyWhitespace])
@@ -76,7 +80,7 @@ export class CheckoutComponent implements OnInit {
                                     MJDiscValidators.notOnlyWhitespace]),
         city: new FormControl('', [Validators.required, Validators.minLength(2),
                                   MJDiscValidators.notOnlyWhitespace]),
-        state: new FormControl('', [Validators.required]),
+        // state: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
         zipCode: new FormControl('', [Validators.required, Validators.minLength(2),
                                      MJDiscValidators.notOnlyWhitespace])
@@ -164,14 +168,16 @@ export class CheckoutComponent implements OnInit {
       .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
 
       // bug fix for states
-      this.billingAddressStates = this.shippingAddressStates;
+      this.billingAddressAddress = this.shippingAddressAddress;
+      // this.billingAddressStates = this.shippingAddressStates;
 
     }
     else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
 
       // bug fix for states
-      this.billingAddressStates = [];
+      this.billingAddressAddress = [];
+      //this.billingAddressStates = [];
     }
   }
 
@@ -208,30 +214,30 @@ export class CheckoutComponent implements OnInit {
 
     // populate purchase - customer
     purchase.customer = this.checkoutFormGroup.controls['customer'].value;
-
+/*
     // populate purchase - shipping address
     purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
     const shippingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress.state));
     const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
     purchase.shippingAddress.state = shippingState.name;
     purchase.shippingAddress.country = shippingCountry.name;
-
+*/
+/*
     // populate purchase - billing address
     purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
     const billingState: State = JSON.parse(JSON.stringify(purchase.billingAddress.state));
     const billingCountry: Country = JSON.parse(JSON.stringify(purchase.billingAddress.country));
     purchase.billingAddress.state = billingState.name;
     purchase.billingAddress.country = billingCountry.name;
-
+*/
     // populate purchase - order and orderItems
     purchase.order = order;
     purchase.orderItems = orderItems;
 
     // call REST API via the CheckoutService
-    this.checkoutService.placeOrder(purchase).subscribe(
-      {
+    this.checkoutService.placeOrder(purchase).subscribe({
         next: response => {
-        alert(`Your order has been received. \nOrder tracking number: ${response.orderTrackingNumber}`);
+        alert(`Din order har blivit mottagen. \nOrderspårningsnummer: ${response.orderTrackingNumber}`);
 
         // reset cart
         this.resetCart();
@@ -284,6 +290,7 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
+  
   getStates(formGroupName: string) {
 
     const formGroup = this.checkoutFormGroup.get(formGroupName);
@@ -308,6 +315,6 @@ export class CheckoutComponent implements OnInit {
         formGroup.get('state').setValue(data[0]);
       }
     );
-
+    
   }
 }

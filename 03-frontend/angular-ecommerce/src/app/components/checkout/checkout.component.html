@@ -6,10 +6,10 @@
 
                 <!-- customer form group -->
                 <div formGroupName="customer" class="form-area">
-                    <h3>Customer</h3>
+                    <h3>Kund</h3>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>First Name</label></div>
+                        <div class="col-md-2"> <label>Förnamn</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="firstName" type="text">
@@ -17,11 +17,11 @@
                                 <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger mt-1">
 
                                     <div *ngIf="firstName.errors['required'] || firstName.errors['notOnlyWhitespace']">
-                                        First Name is required
+                                        Förnamn krävs 
                                     </div>
 
                                     <div *ngIf="firstName.errors['minlength']">
-                                        First Name must be at least 2 characters long
+                                       Förnamn måste vara minst 2 tecken långt.
                                     </div>
                                 </div> 
 
@@ -30,18 +30,18 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>Last Name</label></div>
+                        <div class="col-md-2"> <label>Efternamn</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="lastName" type="text">
                                 <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger mt-1">
 
                                     <div *ngIf="lastName.errors['required'] || lastName.errors['notOnlyWhitespace']">
-                                        Last Name is required
+                                        Efternamn krävs.
                                     </div>
 
                                     <div *ngIf="lastName.errors['minlength']">
-                                        Last Name must be at least 2 characters long
+                                        Efternamn måste vara minst 2 tecken långt.
                                     </div>
 
                                  </div>
@@ -57,11 +57,11 @@
                                 <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger mt-1">
 
                                     <div *ngIf="email.errors['required']">
-                                        Email is required
+                                        Email krävs
                                     </div>
 
                                     <div *ngIf="email.errors['pattern']">
-                                        Email must be a valid email address format
+                                        Email måste vara ett giltigt e-postadressformat.
                                     </div>
 
                                  </div>
@@ -73,10 +73,10 @@
 
                 <!-- shipping address -->
                 <div formGroupName="shippingAddress" class="form-area">
-                    <h3>Shipping Address</h3>
+                    <h3>Leveransadress</h3>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>Country</label></div>
+                        <div class="col-md-2"> <label>Land</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="country" (change)="getStates('shippingAddress')">
@@ -87,7 +87,7 @@
 
                                 <div *ngIf="shippingAddressCountry.invalid && (shippingAddressCountry.dirty || shippingAddressCountry.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="shippingAddressCountry.errors['required']">
-                                        Country is required
+                                        Land krävs.
                                     </div>
                                  </div>
 
@@ -96,17 +96,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>Street</label></div>
+                        <div class="col-md-2"> <label>Adress</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">  
                                 <input formControlName="street" type="text">
                         
                                  <div *ngIf="shippingAddressStreet.invalid && (shippingAddressStreet.dirty || shippingAddressStreet.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="shippingAddressStreet.errors['required'] || shippingAddressStreet.errors['notOnlyWhitespace']">
-                                        Street is required
+                                        Adress krävs
                                     </div>
                                     <div *ngIf="shippingAddressStreet.errors['minlength']">
-                                        Street must be at least 2 characters long
+                                        Adress måste vara minst 2 tecken långt.
                                     </div>
                                 </div>
 
@@ -115,17 +115,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>City</label></div>
+                        <div class="col-md-2"> <label>Stad</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="city" type="text">
 
                                 <div *ngIf="shippingAddressCity.invalid && (shippingAddressCity.dirty || shippingAddressCity.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="shippingAddressCity.errors['required'] || shippingAddressCity.errors['notOnlyWhitespace']">
-                                        City is required
+                                        Stad krävs.
                                     </div>
                                     <div *ngIf="shippingAddressCity.errors['minlength']">
-                                        City must be at least 2 characters long
+                                       Stad måste vara minst 2 tecken långt.
                                     </div>
                                 </div>
 
@@ -134,37 +134,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>State</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="state">
-                                    <option *ngFor="let state of shippingAddressStates" [ngValue]="state">
-                                        {{ state.name }}
-                                    </option>
-                                </select>
-
-                                <div *ngIf="shippingAddressState.invalid && (shippingAddressState.dirty || shippingAddressState.touched)" class="alert alert-danger mt-1">
-                                    <div *ngIf="shippingAddressState.errors['required']">
-                                        State is required
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"> <label>Zip Code</label></div>
+                        <div class="col-md-2"> <label>Postnummer</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
 
                                 <div *ngIf="shippingAddressZipCode.invalid && (shippingAddressZipCode.dirty || shippingAddressZipCode.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="shippingAddressZipCode.errors['required'] || shippingAddressZipCode.errors['notOnlyWhitespace']">
-                                        Zip Code is required
+                                        Postnummer krävs.
                                     </div>
                                     <div *ngIf="shippingAddressZipCode.errors['minlength']">
-                                        Zip code must be at least 2 characters long
+                                        Postnummer måste vara minst 2 tecken långt.
                                     </div>
                                 </div>
 
@@ -178,16 +158,16 @@
                 <div class="input-space">
                     <label class="au-checkbox">
                         <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
-                        <span class="au-checkmark"></span>Billing Address same as Shipping Address
+                        <span class="au-checkmark"></span>Faktureringsadress är samma som Leveransadress.
                     </label>
                 </div>
 
                 <!-- Billing address -->
                 <div formGroupName="billingAddress" class="form-area">
-                    <h3>Billing Address</h3>
+                    <h3>Fakturaadress</h3>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>Country</label></div>
+                        <div class="col-md-2"> <label>Land</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="country" (change)="getStates('billingAddress')">
@@ -198,7 +178,7 @@
 
                                 <div *ngIf="billingAddressCountry.invalid && (billingAddressCountry.dirty || billingAddressCountry.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="billingAddressCountry.errors['required']">
-                                        Country is required
+                                        Land krävs
                                     </div>
                                  </div>
                                  
@@ -207,17 +187,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>Street</label></div>
+                        <div class="col-md-2"> <label>Adress</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="street" type="text">
 
                                 <div *ngIf="billingAddressStreet.invalid && (billingAddressStreet.dirty || billingAddressStreet.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="billingAddressStreet.errors['required'] || billingAddressStreet.errors['notOnlyWhitespace']">
-                                         Street is required
+                                         Adress krävs.
                                     </div>
                                     <div *ngIf="billingAddressStreet.errors['minlength']">
-                                        Street must be at least 2 characters long
+                                        Adress måste vara minst 2 tecken långt.
                                     </div>
                                 </div>
 
@@ -226,17 +206,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>City</label></div>
+                        <div class="col-md-2"> <label>Stad</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="city" type="text">
 
                                 <div *ngIf="billingAddressCity.invalid && (billingAddressCity.dirty || billingAddressCity.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="billingAddressCity.errors['required'] || billingAddressCity.errors['notOnlyWhitespace']">
-                                         City is required
+                                        Stad krävs.
                                     </div>
                                     <div *ngIf="billingAddressCity.errors['minlength']">
-                                       City must be at least 2 characters long
+                                        Stad måste vara minst 2 tecken långt.
                                     </div>
                                 </div>
 
@@ -245,38 +225,18 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"> <label>State</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="state">
-                                    <option *ngFor="let state of billingAddressStates" [ngValue]="state">
-                                        {{ state.name }}
-                                    </option>
-                                </select>
-
-                                <div *ngIf="billingAddressState.invalid && (billingAddressState.dirty || billingAddressState.touched)" class="alert alert-danger mt-1">
-                                    <div *ngIf="billingAddressState.errors['required']">
-                                        State is required
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"> <label>Zip Code</label></div>
+                        <div class="col-md-2"> <label>Postnummer</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
 
                                 <div *ngIf="billingAddressZipCode.invalid && (billingAddressZipCode.dirty || billingAddressZipCode.touched)" class="alert alert-danger mt-1">
                                     <div *ngIf="billingAddressZipCode.errors['required'] || billingAddressZipCode.errors['notOnlyWhitespace']">
-                                        Zip Code is required
+                                        Postnummer krävs.
                                     </div>
 
                                     <div *ngIf="billingAddressZipCode.errors['minlength']">
-                                       Zip code must be at least 2 characters long
+                                        Postnummer måste vara minst 2 tecken långt.
                                     </div>
                                 </div>
 
@@ -288,10 +248,10 @@
 
                 <!-- Credit Card -->
                 <div formGroupName="creditCard" class="form-area">
-                        <h3>Credit Card</h3>
+                        <h3>Kredit Kort</h3>
     
                         <div class="row">
-                            <div class="col-md-2"> <label>Card Type</label></div>
+                            <div class="col-md-2"> <label>Kort typ</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <select formControlName="cardType">
@@ -301,7 +261,7 @@
 
                                     <div *ngIf="creditCardType.invalid && (creditCardType.dirty || creditCardType.touched)" class="alert alert-danger mt-1">
                                         <div *ngIf="creditCardType.errors['required']">
-                                            Credit card type is required
+                                            Kredit kort's typ krävs.
                                         </div>
                                     </div>
 
@@ -310,18 +270,18 @@
                         </div>
     
                         <div class="row">
-                            <div class="col-md-2"> <label>Name on Card</label></div>
+                            <div class="col-md-2"> <label>Namn på kortet</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="nameOnCard" type="text">
 
                                     <div *ngIf="creditCardNameOnCard.invalid && (creditCardNameOnCard.dirty || creditCardNameOnCard.touched)" class="alert alert-danger mt-1">
                                         <div *ngIf="creditCardNameOnCard.errors['required'] || creditCardNameOnCard.errors['notOnlyWhitespace']">
-                                            Name is required
+                                            Namn krävs
                                         </div>
 
                                         <div *ngIf="creditCardNameOnCard.errors['minlength']">
-                                            Name must be at least 2 characters long
+                                            Namn måste vara minst 2 tecken långt.
                                         </div>
                                     </div>
 
@@ -330,17 +290,17 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2"> <label>Card Number</label></div>
+                            <div class="col-md-2"> <label>Kort nummer</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="cardNumber" type="text">
 
                                     <div *ngIf="creditCardNumber.invalid && (creditCardNumber.dirty || creditCardNumber.touched)" class="alert alert-danger mt-1">
                                         <div *ngIf="creditCardNumber.errors['required']">
-                                            Card number is required
+                                            Kort nummer krävs.
                                         </div>
                                         <div *ngIf="creditCardNumber.errors['pattern']">
-                                            Card number must be 16 digits long
+                                          Kortnumret måste vara 16 siffror långt.
                                         </div>
                                     </div>
 
@@ -349,17 +309,17 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2"> <label>Security Code</label></div>
+                            <div class="col-md-2"> <label>Säkerhetskod</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="securityCode" type="text">
                                     <div *ngIf="creditCardSecurityCode.invalid && (creditCardSecurityCode.dirty || creditCardSecurityCode.touched)" class="alert alert-danger mt-1">
                                         
                                         <div *ngIf="creditCardSecurityCode.errors['required']">
-                                            Security code is required
+                                            Säkerhetskod krävs.
                                         </div>
                                         <div *ngIf="creditCardSecurityCode.errors['pattern']">
-                                            Security code must be 3 digits long
+                                            Säkerhetskoden måste vara 3 siffror långt.
                                         </div>
                                     </div>
 
@@ -368,7 +328,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2"> <label>Expiration Month</label></div>
+                            <div class="col-md-2"> <label>Utgångs Månad</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <select formControlName="expirationMonth">
@@ -381,7 +341,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2"> <label>Expiration Year</label></div>
+                            <div class="col-md-2"> <label>Utgångs År</label></div>
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
@@ -399,17 +359,17 @@
 
                 <!-- Order details -->
                 <div class="form-area">
-                    <h3>Review Your Order</h3>
+                    <h3>Granska din beställning</h3>
 
-                    <p>Total Quantity: {{ totalQuantity }}</p>
-                    <p>Shipping: FREE</p>
-                    <p>Total Price: {{ totalPrice| currency: 'SEK ' }}</p>
+                    <p>Total kvantitet: {{ totalQuantity }}</p>
+                    <p>Frakt: Kostnadsfri</p>
+                    <p>Total Pris: {{ totalPrice| currency: 'SEK ' }}</p>
                 </div>
 
 
                 <!-- submit button -->
                 <div class="text-center">
-                    <button type="submit" class="btn btn-info">Purchase</button>
+                    <button type="submit" class="btn btn-info">Köp</button>
                 </div>
 
             </form>
