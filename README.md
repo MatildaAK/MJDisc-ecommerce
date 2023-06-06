@@ -2,7 +2,7 @@
 
 Building a E-Commerce Website for Discgolf
 
-Hur productsiderna ser ut:
+Hur produkt sidorna ser ut:
 
 <img width="655" alt="produkter" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/d4b7e7ab-9b4b-4910-8005-e25509770a8e">
 
@@ -26,6 +26,7 @@ Medlemssida:
 
 Kundkorg:
 
-<img width="808" alt="kundkorg" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/19bdab3a-b6f4-4e42-8b39-71a065f5a1ff">
+<img width="807" alt="kundkorg" src="https://github.com/MatildaAK/MJDisc-ecommerce/assets/117752722/849a2ac2-ca17-4ae5-a183-a1f2a022946b">
+
 
 
