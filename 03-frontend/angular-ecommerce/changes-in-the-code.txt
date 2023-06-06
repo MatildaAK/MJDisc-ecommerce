@@ -1,0 +1,75 @@
+  From: Package.json row 4-10
+  
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --ssl=true --ssl-key=./ssl-localhost/localhost.key --ssl-cert=./ssl-localhost/localhost.crt",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+    },
+
+    From: my-app-config.ts row 3-8
+
+        oidc: {
+        clientId: '0oa9szfx737sMJigv5d7',
+        issuer: 'https://dev-66161579.okta.com/oauth2/default',
+        redirectUri: 'https://localhost:4200/login/callback',
+        scopes: ['openid', 'profile', 'email']
+    }
+
+    checkout.component.html row 136-154
+
+                    <div class="row">
+                        <div class="col-md-2"> <label>State</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <select formControlName="state">
+                                        <option *ngFor="let state of shippingAddressStates" [ngValue]="state">
+                                        {{ state.name }}
+                                        </option>
+                                    </select>
+
+                                    <div *ngIf="shippingAddressState.invalid && (shippingAddressState.dirty || shippingAddressState.touched)" class="alert alert-danger mt-1">
+                                        <div *ngIf="shippingAddressState.errors['required']">
+                                            State is required
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                  
+
+                row 247-265
+
+                <div class="row">
+                    <div class="col-md-2"> <label>State</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="state">
+                                    <option *ngFor="let state of billingAddressStates" [ngValue]="state">
+                                        {{ state.name }}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="billingAddressState.invalid && (billingAddressState.dirty || billingAddressState.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="billingAddressState.errors['required']">
+                                        State is required
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
+
+
+angular.json row 63-70
+
+                            "qa": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
+            },
