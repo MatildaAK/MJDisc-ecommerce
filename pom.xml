@@ -71,6 +71,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!--
+			For Maven, add the following dependency to your POM and replace {VERSION} with the
+			version number you want to use from
+			- https://mvnrepository.com/artifact/com.stripe/stripe-java or
+			- https://github.com/stripe/stripe-java/releases/latest
+			Skulle inte den nya jag använder fungera byt ut 22.26.0 till 20.80.0
+		-->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>22.26.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
