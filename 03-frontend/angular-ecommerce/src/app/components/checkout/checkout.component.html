@@ -247,113 +247,19 @@
                 </div>
 
                 <!-- Credit Card -->
+              
+                <!-- Stripe Elemetns Credit Card Section -->
                 <div formGroupName="creditCard" class="form-area">
-                        <h3>Kredit Kort</h3>
-    
-                        <div class="row">
-                            <div class="col-md-2"> <label>Kort typ</label></div>
-                            <div class="col-md-9">
-                                <div class="input-space">
-                                    <select formControlName="cardType">
-                                        <option>Visa</option>
-                                        <option>Mastercard</option>
-                                    </select>
 
-                                    <div *ngIf="creditCardType.invalid && (creditCardType.dirty || creditCardType.touched)" class="alert alert-danger mt-1">
-                                        <div *ngIf="creditCardType.errors['required']">
-                                            Kredit kort's typ krävs.
-                                        </div>
-                                    </div>
+                    <h3>Kredit eller Debit kort</h3>
 
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col-md-2"> <label>Namn på kortet</label></div>
-                            <div class="col-md-9">
-                                <div class="input-space">
-                                    <input formControlName="nameOnCard" type="text">
+                    <div id="card-element">
+                        <!-- a Stripe element will be inserted here -->
+                    </div>
 
-                                    <div *ngIf="creditCardNameOnCard.invalid && (creditCardNameOnCard.dirty || creditCardNameOnCard.touched)" class="alert alert-danger mt-1">
-                                        <div *ngIf="creditCardNameOnCard.errors['required'] || creditCardNameOnCard.errors['notOnlyWhitespace']">
-                                            Namn krävs
-                                        </div>
-
-                                        <div *ngIf="creditCardNameOnCard.errors['minlength']">
-                                            Namn måste vara minst 2 tecken långt.
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2"> <label>Kort nummer</label></div>
-                            <div class="col-md-9">
-                                <div class="input-space">
-                                    <input formControlName="cardNumber" type="text">
-
-                                    <div *ngIf="creditCardNumber.invalid && (creditCardNumber.dirty || creditCardNumber.touched)" class="alert alert-danger mt-1">
-                                        <div *ngIf="creditCardNumber.errors['required']">
-                                            Kort nummer krävs.
-                                        </div>
-                                        <div *ngIf="creditCardNumber.errors['pattern']">
-                                          Kortnumret måste vara 16 siffror långt.
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2"> <label>Säkerhetskod</label></div>
-                            <div class="col-md-9">
-                                <div class="input-space">
-                                    <input formControlName="securityCode" type="text">
-                                    <div *ngIf="creditCardSecurityCode.invalid && (creditCardSecurityCode.dirty || creditCardSecurityCode.touched)" class="alert alert-danger mt-1">
-                                        
-                                        <div *ngIf="creditCardSecurityCode.errors['required']">
-                                            Säkerhetskod krävs.
-                                        </div>
-                                        <div *ngIf="creditCardSecurityCode.errors['pattern']">
-                                            Säkerhetskoden måste vara 3 siffror långt.
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2"> <label>Utgångs Månad</label></div>
-                            <div class="col-md-9">
-                                <div class="input-space">
-                                    <select formControlName="expirationMonth">
-                                        <option *ngFor="let month of creditCardMonths">
-                                            {{ month }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2"> <label>Utgångs År</label></div>
-                            <div class="col-md-9">
-                                <div class="input-space">
-                                    <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
-                                        <option *ngFor="let year of creditCardYears">
-                                            {{ year }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                        </div>
-
+                    <!-- Used to display form errors -->
+                    <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
+                    
                 </div>
 
 
