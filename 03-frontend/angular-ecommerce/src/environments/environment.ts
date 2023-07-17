@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  mjDiscApiUrl: "https://localhost:9898/api"
+  mjDiscApiUrl: "https://localhost:8443/api",
+  stripePublishableKey: "pk_test_51NTMqiL9OmzOvV9CqzwunrchIVeekQkjPGD237BBbSB9pww9QiWVTypjglHzpdiMY5SZIv6GRCznN5WIlgbiQ0UX00XTpxVgDl"
+
 };
 
 /*

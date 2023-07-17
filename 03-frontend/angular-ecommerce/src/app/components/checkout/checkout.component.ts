@@ -5,12 +5,14 @@ import { Address } from 'src/app/common/address';
 import { Country } from 'src/app/common/country';
 import { Order } from 'src/app/common/order';
 import { OrderItem } from 'src/app/common/order-item';
+import { PaymentInfo } from 'src/app/common/payment-info';
 import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { MJDiscShopFormService } from 'src/app/services/mjdisc-shop-form.service';
 import { MJDiscValidators } from 'src/app/validators/mjdisc-validators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -26,7 +28,6 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
-
   countries: Country[] = [];
 
   shippingAddressStates: State[] = [];
@@ -36,6 +37,13 @@ export class CheckoutComponent implements OnInit {
   billingAddressAddress: Address[] = [];
 
   storage: Storage = sessionStorage;
+
+  // initialize Stripe API
+  stripe = Stripe(environment.stripePublishableKey);
+
+  paymentInfo: PaymentInfo = new PaymentInfo();
+  cardElement: any;
+  displayError: any = "";
   
   constructor(private formBuilder: FormBuilder,
               private mjdiscFormService: MJDiscShopFormService,
@@ -44,6 +52,9 @@ export class CheckoutComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+
+    // setup Stripe payment form
+    this.setupStripePaymentForm();
 
     this.reviewCartDetails();
 
@@ -85,7 +96,8 @@ export class CheckoutComponent implements OnInit {
         zipCode: new FormControl('', [Validators.required, Validators.minLength(2),
                                      MJDiscValidators.notOnlyWhitespace])
       }),
-      creditCard: this.formBuilder.group({
+     creditCard: this.formBuilder.group({
+       /*
         cardType:  new FormControl('', [Validators.required]),
         nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2),
                                         MJDiscValidators.notOnlyWhitespace]),
@@ -93,9 +105,10 @@ export class CheckoutComponent implements OnInit {
         securityCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
         expirationMonth: [''],
         expirationYear: ['']
-      })
+         */
+      }) 
     });
-
+/*
     // populate credit card months
     const startMonth: number = new Date().getMonth() + 1;
     console.log('startMonth: ' + startMonth);
@@ -114,7 +127,7 @@ export class CheckoutComponent implements OnInit {
         console.log("Retrieved credit card years: " + JSON.stringify(data));
         this.creditCardYears = data;
       }
-    );
+    );*/
 
     // populate countries
 
@@ -124,6 +137,32 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     );
+  }
+
+  setupStripePaymentForm() {
+    // get a handle to stripe elements
+    var elements = this.stripe.elements();
+
+    // create a card element ... and hide the zip-code field
+    this.cardElement = elements.create('card', { hidePostalCode: true});
+
+    // Add a instance of card UI component into the 'card-element' div
+    this.cardElement.mount('#card-element');
+
+    // Add event binding for the 'change' event on the card element
+    this.cardElement.on('change', (event: any) => {
+
+      // get a handle to card-errors element
+      this.displayError = document.getElementById('card-errors');
+
+      if (event.complete) {
+        this.displayError.textContent = "";
+      } else if (event.error) {
+        // show validation error to customer
+        this.displayError.textContent = event.error.message;
+      }
+
+    });
   }
 
   reviewCartDetails() {
@@ -221,8 +260,7 @@ export class CheckoutComponent implements OnInit {
     const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
     purchase.shippingAddress.state = shippingState.name;
     purchase.shippingAddress.country = shippingCountry.name;
-*/
-/*
+*/ /*
     // populate purchase - billing address
     purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
     const billingState: State = JSON.parse(JSON.stringify(purchase.billingAddress.state));
@@ -234,22 +272,52 @@ export class CheckoutComponent implements OnInit {
     purchase.order = order;
     purchase.orderItems = orderItems;
 
-    // call REST API via the CheckoutService
-    this.checkoutService.placeOrder(purchase).subscribe({
-        next: response => {
-        alert(`Din order har blivit mottagen. \nOrderspårningsnummer: ${response.orderTrackingNumber}`);
+    // compute payment info
+    this.paymentInfo.amount = this.totalPrice * 100;
+    this.paymentInfo.currency = "SEK";
 
-        // reset cart
-        this.resetCart();
+  // if valid form then
+  // - create payment intent
+  // - confirm card payment
+  // - place order
 
-        },
-        error: err => {
-          alert(`There was an error: ${err.message}`);
-        } 
-      }
-    );
+    if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
+
+      this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
+        (paymentIntentResponse) => {
+          this.stripe.confirmCardPayment(paymentIntentResponse.client_secret, 
+           {
+              payment_method: {
+               card: this.cardElement
+             }
+            }, {handleActions: false })
+            .then((result: any) => {
+              if (result.error) {
+                // inform the customer there was an error
+               alert(`Det uppstod ett problem: ${result.error.message}`);
+              } else {
+                // call REST API via CheckoutService
+                this.checkoutService.placeOrder(purchase).subscribe({
+                  next: (response: any) => {
+                   alert(`Din order har blivit mottagen. \nBeställningens spårningsnummer: ${response.orderTrackingNumber} `);
+
+                    // reset card
+                    this.resetCart();
+                  },
+                 error: (err: any) => {
+                    alert(`Det uppstod ett problem: ${err.message}`);
+                  }
+                })
+              }
+            });
+        }
+      );
+    } else {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
+
   }
-
 
   resetCart() {
     // reset cart data
