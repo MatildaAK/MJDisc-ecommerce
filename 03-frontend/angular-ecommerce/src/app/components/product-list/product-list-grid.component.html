@@ -1,5 +1,9 @@
 <div class="main-content">
     <div class="section-content section-content-30">
+
+        <h4> {{ currentCategoryName }}</h4>
+        <hr>
+
         <div class="container-fluid">
             <div class="row">
                 
@@ -54,7 +58,7 @@
 
                                     <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
                                        <!-- <option selected="true">5</option> --> 
-                                        <option selected="true">10</option>
+                                        <option selected="true"></option>
                                         <option>20</option>
                                         <option>50</option>
                                     </select>
