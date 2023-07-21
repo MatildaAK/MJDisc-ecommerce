@@ -44,6 +44,8 @@ export class CheckoutComponent implements OnInit {
   paymentInfo: PaymentInfo = new PaymentInfo();
   cardElement: any;
   displayError: any = "";
+
+  isDisabled: boolean = false;
   
   constructor(private formBuilder: FormBuilder,
               private mjdiscFormService: MJDiscShopFormService,
@@ -260,7 +262,7 @@ export class CheckoutComponent implements OnInit {
     const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
     purchase.shippingAddress.state = shippingState.name;
     purchase.shippingAddress.country = shippingCountry.name;
-*/ /*
+    
     // populate purchase - billing address
     purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
     const billingState: State = JSON.parse(JSON.stringify(purchase.billingAddress.state));
@@ -273,9 +275,11 @@ export class CheckoutComponent implements OnInit {
     purchase.orderItems = orderItems;
 
     // compute payment info
-    this.paymentInfo.amount = this.totalPrice * 100;
+    this.paymentInfo.amount = Math.round(this.totalPrice * 100);
     this.paymentInfo.currency = "SEK";
+    this.paymentInfo.receiptEmail = purchase.customer.email;
 
+    console.log(`this.paymentInfo.amount: ${this.paymentInfo.amount}`);
   // if valid form then
   // - create payment intent
   // - confirm card payment
@@ -283,33 +287,49 @@ export class CheckoutComponent implements OnInit {
 
     if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
 
+      this.isDisabled = true;
+
       this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
         (paymentIntentResponse) => {
           this.stripe.confirmCardPayment(paymentIntentResponse.client_secret, 
            {
               payment_method: {
-               card: this.cardElement
+               card: this.cardElement,
+               billing_details: {
+                email: purchase.customer.email,
+                name: `${purchase.customer.firstName} ${purchase.customer.lastName}`,
+               /*address: {
+                  line1: purchase.billingAddress.street,
+                  city: purchase.billingAddress.city,
+                  //state: purchase.billingAddress.state,
+                  postal_code: purchase.billingAddress.zipCode,
+                  country: this.billingAddressCountry.value.code
+                }*/
+               }
              }
             }, {handleActions: false })
-            .then((result: any) => {
+            .then(function(result) {
               if (result.error) {
                 // inform the customer there was an error
                alert(`Det uppstod ett problem: ${result.error.message}`);
+               this.isDisabled = false;
               } else {
                 // call REST API via CheckoutService
                 this.checkoutService.placeOrder(purchase).subscribe({
-                  next: (response: any) => {
+                  next: response => {
                    alert(`Din order har blivit mottagen. \nBeställningens spårningsnummer: ${response.orderTrackingNumber} `);
 
                     // reset card
                     this.resetCart();
+                    this.isDisabled = false;
                   },
-                 error: (err: any) => {
+                 error: err => {
                     alert(`Det uppstod ett problem: ${err.message}`);
+                    this.isDisabled = false;
                   }
                 })
               }
-            });
+            }.bind(this));
         }
       );
     } else {
@@ -324,6 +344,7 @@ export class CheckoutComponent implements OnInit {
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
     this.cartService.totalQuantity.next(0);
+    this.cartService.persistCartItems();
 
     // reset the form
     this.checkoutFormGroup.reset();
@@ -332,7 +353,7 @@ export class CheckoutComponent implements OnInit {
     this.router.navigateByUrl("/products");
   }
 
-  handleMonthsAndYears() {
+ /* handleMonthsAndYears() {
 
     const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
 
@@ -357,8 +378,8 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+  */
 
-  
   getStates(formGroupName: string) {
 
     const formGroup = this.checkoutFormGroup.get(formGroupName);

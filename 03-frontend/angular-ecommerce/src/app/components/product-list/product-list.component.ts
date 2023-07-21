@@ -19,10 +19,11 @@ export class ProductListComponent implements OnInit {
 
   // new properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 8;
   theTotalElements: number = 0;
   
   previousKeyword: string = "";
+  currentCategoryName: string = "";
 
 
   constructor(private productService: ProductService, 
@@ -78,10 +79,14 @@ export class ProductListComponent implements OnInit {
     if (hasCategoryId) {
     // get the "id" param string. convert string to a number using the "+" symbol
     this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+
+    // get the "name" param string
+    this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
     }
     else {
     // not category id available... default to category is 1
     this.currentCategoryId = 1;
+    this.currentCategoryName = 'Putt/ Approch';
     }
   
     //
